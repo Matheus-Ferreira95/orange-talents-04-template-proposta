@@ -13,7 +13,6 @@ public class NovaPropostaRequest {
 
     @NotBlank
     @CpfOrCnpj
-    @UniqueValue(campo = "documento", domainClass = Proposta.class)
     private String documento;
 
     @NotBlank
@@ -38,6 +37,10 @@ public class NovaPropostaRequest {
         this.nome = nome;
         this.endereco = endereco;
         this.salario = salario;
+    }
+
+    public String getDocumento() {
+        return documento;
     }
 
     public Proposta toModel() {
