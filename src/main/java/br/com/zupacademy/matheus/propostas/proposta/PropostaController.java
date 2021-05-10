@@ -1,7 +1,9 @@
 package br.com.zupacademy.matheus.propostas.proposta;
 
+import br.com.zupacademy.matheus.propostas.compartilhado.handler.ApiErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +32,8 @@ public class PropostaController {
         if (propostaRepository.existsByDocumento(request.getDocumento())) {
             // na prática eu não iria expor o documento dessa forma, como é só testes qqmuda?
             log.warn("Proposta não criada, portador do documento {} já criou uma proposta", request.getDocumento());
-            return ResponseEntity.unprocessableEntity().body("Proposta recusada! Já existe uma proposta para o documento informado");
+            return ResponseEntity.unprocessableEntity().body(new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
+                    "Proposta recusada! Já existe uma proposta para o documento informado"));
         }
 
         Proposta proposta = request.toModel();
