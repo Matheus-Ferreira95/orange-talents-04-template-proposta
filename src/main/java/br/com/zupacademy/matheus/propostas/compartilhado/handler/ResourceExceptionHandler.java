@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,5 +27,10 @@ public class ResourceExceptionHandler {
             erros.add(new MessageError(fieldError.getField(), messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())));
         });
         return erros;
+    }
+
+    @ExceptionHandler(ApiErrorException.class)
+    public ResponseEntity<String> handlerApiErrorException(ApiErrorException ex) {
+        return ResponseEntity.status(ex.getHttpStatus()).body("kkk");
     }
 }
