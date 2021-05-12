@@ -9,12 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
+@Configuration
 public class BuscaCartaoScheduling {
 
     private final Logger log = LoggerFactory.getLogger(BuscaCartaoScheduling.class);
@@ -27,7 +26,7 @@ public class BuscaCartaoScheduling {
         this.cartaoClient = cartaoClient;
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 50000)
     @Transactional
     public void buscaCartao() {
         List<Proposta> propostas = propostaRepository.findByStatusAndCartaoIsNull(StatusProposta.ELEGIVEL);

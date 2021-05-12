@@ -1,21 +1,22 @@
 package br.com.zupacademy.matheus.propostas.proposta;
 
 import br.com.zupacademy.matheus.propostas.compartilhado.ExecutorTransacao;
+import br.com.zupacademy.matheus.propostas.compartilhado.handler.ApiErrorException;
 import br.com.zupacademy.matheus.propostas.feign.analise.SolicitacaoAnaliseCliente;
 import br.com.zupacademy.matheus.propostas.feign.analise.SolicitacaoAnaliseRequest;
 import br.com.zupacademy.matheus.propostas.feign.analise.SolicitacaoAnaliseResponse;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/propostas")
@@ -49,6 +50,15 @@ public class PropostaController {
         executorTransacao.atualizaEComita(proposta);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(proposta.getId()).toUri();
         return ResponseEntity.created(uri).body("Proposta cadastrada!");
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscaPropostaPorId(@PathVariable Long id) {
+        Optional<Proposta> possivelProposta = propostaRepository.findById(id);
+        if (possivelProposta.isPresent()) {
+            return ResponseEntity.ok(new PropostaResponse(possivelProposta.get()));
+        }
+        throw new ApiErrorException(HttpStatus.NOT_FOUND, "Não foi encontrada proposta com id " + id);
     }
 
     private void consultaDados(Proposta proposta) {

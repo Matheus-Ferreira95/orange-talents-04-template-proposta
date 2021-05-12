@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,6 +42,6 @@ public class ResourceExceptionHandler {
     public ResponseEntity<String> handlerApiErrorException(ApiErrorException ex) {
         Collection<String> messages = new ArrayList<>();
         messages.add(ex.getReason());
-        return ResponseEntity.status(ex.getHttpStatus()).body("kkk");
+        return ResponseEntity.status(ex.getHttpStatus()).body(ex.getMessage());
     }
 }

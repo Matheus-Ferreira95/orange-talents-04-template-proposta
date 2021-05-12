@@ -62,6 +62,22 @@ public class Proposta {
         this.status = status;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public BigDecimal getSalario() {
+        return salario;
+    }
+
+    public StatusProposta getStatus() {
+        return status;
+    }
+
     public void setCartao(@NotNull Cartao cartao) {
         Assert.notNull(cartao, "cartão não pode ser nulo");
         this.cartao = cartao;
