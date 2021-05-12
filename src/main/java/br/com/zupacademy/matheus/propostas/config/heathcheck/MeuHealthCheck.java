@@ -1,4 +1,4 @@
-package br.com.zupacademy.matheus.propostas.compartilhado.healthcheck;
+package br.com.zupacademy.matheus.propostas.config.heathcheck;
 
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;

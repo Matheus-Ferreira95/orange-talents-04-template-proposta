@@ -1,6 +1,10 @@
 package br.com.zupacademy.matheus.propostas.proposta;
 
+import br.com.zupacademy.matheus.propostas.cartao.Cartao;
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -28,6 +32,12 @@ public class Proposta {
     @Enumerated(EnumType.STRING)
     private StatusProposta status;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cartao cartao;
+
+    @Deprecated
+    public Proposta() {}
+
     public Proposta(String nome, String documento, String email, String endereco, BigDecimal salario) {
         this.nome = nome;
         this.documento = documento;
@@ -50,6 +60,11 @@ public class Proposta {
 
     public void setStatus(StatusProposta status) {
         this.status = status;
+    }
+
+    public void setCartao(@NotNull Cartao cartao) {
+        Assert.notNull(cartao, "cartão não pode ser nulo");
+        this.cartao = cartao;
     }
 }
 
