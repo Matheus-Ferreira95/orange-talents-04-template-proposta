@@ -15,4 +15,5 @@ public class PropostasApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PropostasApplication.class, args);
 	}
+
 }

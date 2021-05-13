@@ -125,6 +125,37 @@ services:
     depends_on:
       - prometheus
 
+
+  proposta:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - mysql
+      - analise
+      - contas
+    restart: on-failure
+    image: matheusfsilva05/proposta
+    container_name: proposta
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: jdbc:mysql://mysql:3306/proposta?createDatabaseIfNotExist=true&serverTimezone=UTC
+      DATABASE_USER: root
+      DATABASE_PASSWORD: 1234567
+      ANALISE_SOLICITACAO: http://analise:9999
+      CLIENT_CARTOES: http://contas:8888
+
+  mysql:
+    image: 'mysql:5.7'
+    volumes:
+      - volume-mysql:/var/lib/mysql
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234567
+      MYSQL_DATABASE: proposta
+
   vault:
     image: vault:1.5.3
     ports:
@@ -138,3 +169,4 @@ volumes:
   grafana-volume:
   prometheus-volume:
   postgres-volume:
+  volume-mysql:

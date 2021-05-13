@@ -38,9 +38,9 @@ public class BuscaCartaoScheduling {
                 propostaRepository.save(proposta);
                 log.info("Cartão gerado para a proposta {}", proposta.getId());
             } catch (FeignException ex) {
+                ex.printStackTrace();
                 log.info("Proposta {} ainda não possui cartão!", proposta.getId());
             }
         }
-
     }
 }

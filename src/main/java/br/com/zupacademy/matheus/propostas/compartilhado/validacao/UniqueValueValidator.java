@@ -1,8 +1,5 @@
 package br.com.zupacademy.matheus.propostas.compartilhado.validacao;
 
-import br.com.zupacademy.matheus.propostas.proposta.PropostaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintValidator;
