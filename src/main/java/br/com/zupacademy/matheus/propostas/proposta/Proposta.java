@@ -33,6 +33,7 @@ public class Proposta {
     private StatusProposta status;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(unique = true)
     private Cartao cartao;
 
     @Deprecated

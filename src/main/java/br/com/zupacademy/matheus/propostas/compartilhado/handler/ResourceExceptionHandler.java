@@ -23,7 +23,7 @@ public class ResourceExceptionHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Collection<String> errosDeValidacao(MethodArgumentNotValidException ex) {
+    public ErroPadronizado errosDeValidacao(MethodArgumentNotValidException ex) {
         Collection<String> mensagens = new ArrayList<>();
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         fieldErrors.forEach(e -> {
@@ -33,7 +33,7 @@ public class ResourceExceptionHandler {
         });
 
         ErroPadronizado erroPadronizado = new ErroPadronizado(mensagens);
-        return mensagens;
+        return erroPadronizado;
     }
 
     @ExceptionHandler(ApiErrorException.class)

@@ -1,27 +1,41 @@
 package br.com.zupacademy.matheus.propostas.cartao;
 
+import br.com.zupacademy.matheus.propostas.biometria.Biometria;
 import br.com.zupacademy.matheus.propostas.proposta.Proposta;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Cartao {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true, nullable = false)
+    private String numeroCartao;
 
     private LocalDateTime emitidoEm;
 
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
     private Proposta proposta;
+
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+    private Set<Biometria> biometrias;
 
     @Deprecated
     public Cartao() {}
 
-    public Cartao(String id, LocalDateTime emitidoEm, Proposta proposta) {
-        this.id = id;
+    public Cartao(String numeroCartao, LocalDateTime emitidoEm, Proposta proposta) {
+        this.numeroCartao = numeroCartao;
         this.emitidoEm = emitidoEm;
         this.proposta = proposta;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
