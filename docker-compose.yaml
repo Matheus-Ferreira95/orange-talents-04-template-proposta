@@ -33,6 +33,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: keycloak
       POSTGRES_HOST: postgres
+      TZ: America/Fortaleza
 
   keycloak:
     image: jboss/keycloak
@@ -61,6 +62,7 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: Pa55w0rd
       POSTGRES_PORT_5432_TCP_ADDR: 127.0.0.1
+      TZ: America/Fortaleza
 
   analise:
     image: 'zupacademy/analise-financeira'
