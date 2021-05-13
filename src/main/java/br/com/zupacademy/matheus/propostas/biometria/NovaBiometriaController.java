@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,7 +24,8 @@ public class NovaBiometriaController {
 
     @Transactional
     @PostMapping("/cartao/{id}")
-    public ResponseEntity<?> cadastraBiometria(@PathVariable Long id, @RequestBody @Valid BiometriaRequest request) {
+    public ResponseEntity<?> cadastraBiometria(@PathVariable Long id, @RequestBody @Valid BiometriaRequest request,
+                                               UriComponentsBuilder uriBuilder) {
         Cartao cartao = manager.find(Cartao.class, id);
         if (cartao == null) {
             log.warn("Cartão de id {} não existente", id);
@@ -32,7 +33,7 @@ public class NovaBiometriaController {
         }
         Biometria biometria = request.toModel(cartao);
         manager.persist(biometria);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(biometria.getId()).toUri();
+        URI uri = uriBuilder.path("/biometria/{id}").buildAndExpand(biometria.getId()).toUri();
         log.info("Biometria {} cadastrada com sucesso", biometria.getId());
         return ResponseEntity.created(uri).build();
     }
