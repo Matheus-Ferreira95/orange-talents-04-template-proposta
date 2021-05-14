@@ -62,6 +62,7 @@ public class BloqueioController {
                 return ResponseEntity.unprocessableEntity().build();
             } catch (FeignException ex) {
                 log.warn("Algo de errado não está certo xD");
+                ex.printStackTrace();
             }
         }
 

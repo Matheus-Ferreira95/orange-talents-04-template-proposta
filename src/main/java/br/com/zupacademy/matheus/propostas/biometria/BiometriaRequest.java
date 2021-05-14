@@ -16,7 +16,7 @@ public class BiometriaRequest {
     }
 
     public Biometria toModel(Cartao cartao) {
-        byte[] fingerPrintBase64 = Base64.getDecoder().decode(fingerPrint.getBytes());
+        byte[] fingerPrintBase64 = Base64.getEncoder().encode(fingerPrint.getBytes());
         String mensagemDecodificada = new String(fingerPrintBase64);
         return new Biometria(mensagemDecodificada, cartao);
     }
