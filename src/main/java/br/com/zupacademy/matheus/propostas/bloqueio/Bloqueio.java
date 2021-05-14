@@ -23,6 +23,9 @@ public class Bloqueio {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Cartao cartao;
 
+    @Deprecated
+    public Bloqueio(){}
+
     public Bloqueio(String ipCliente, String userAgent, Cartao cartao) {
         this.ipCliente = ipCliente;
         this.userAgent = userAgent;

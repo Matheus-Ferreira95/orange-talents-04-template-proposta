@@ -26,7 +26,7 @@ public class BuscaCartaoScheduling {
         this.cartaoClient = cartaoClient;
     }
 
-    @Scheduled(fixedDelay = 50000)
+    @Scheduled(fixedDelay = 10000)
     @Transactional
     public void buscaCartao() {
         List<Proposta> propostas = propostaRepository.findByStatusAndCartaoIsNull(StatusProposta.ELEGIVEL);

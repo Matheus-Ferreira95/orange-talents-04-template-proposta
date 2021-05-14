@@ -42,6 +42,10 @@ public class Cartao {
         return id;
     }
 
+    public String getNumeroCartao() {
+        return numeroCartao;
+    }
+
     public void bloqueiaCartao() {
         this.status = StatusCartao.BLOQUEADO;
     }
