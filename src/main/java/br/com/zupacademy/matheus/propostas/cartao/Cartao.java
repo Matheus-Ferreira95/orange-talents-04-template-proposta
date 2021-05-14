@@ -26,6 +26,9 @@ public class Cartao {
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private Set<Biometria> biometrias;
 
+    @Enumerated(EnumType.STRING)
+    private StatusCartao status = StatusCartao.ATIVO;
+
     @Deprecated
     public Cartao() {}
 
@@ -37,5 +40,13 @@ public class Cartao {
 
     public Long getId() {
         return id;
+    }
+
+    public void bloqueiaCartao() {
+        this.status = StatusCartao.BLOQUEADO;
+    }
+
+    public boolean isBlocked() {
+        return status.equals(StatusCartao.BLOQUEADO);
     }
 }
