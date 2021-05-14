@@ -49,4 +49,8 @@ public class Cartao {
     public void bloqueiaCartao() {
         this.status = StatusCartao.BLOQUEADO;
     }
+
+    public boolean pertenceAPropostaDoEmail(Object email) {
+        return email.equals(proposta.getEmail());
+    }
 }
