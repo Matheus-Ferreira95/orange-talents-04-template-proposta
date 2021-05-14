@@ -49,8 +49,4 @@ public class Cartao {
     public void bloqueiaCartao() {
         this.status = StatusCartao.BLOQUEADO;
     }
-
-    public boolean isBlocked() {
-        return status.equals(StatusCartao.BLOQUEADO);
-    }
 }
