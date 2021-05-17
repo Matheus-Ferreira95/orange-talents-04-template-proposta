@@ -4,6 +4,7 @@ import br.com.zupacademy.matheus.propostas.cartao.Cartao;
 
 
 import javax.validation.constraints.NotBlank;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class BiometriaRequest {
