@@ -1,6 +1,7 @@
 package br.com.zupacademy.matheus.propostas.feign.cartao;
 
 import br.com.zupacademy.matheus.propostas.cartao.Cartao;
+import br.com.zupacademy.matheus.propostas.compartilhado.handler.ApiErrorException;
 import br.com.zupacademy.matheus.propostas.proposta.Proposta;
 import br.com.zupacademy.matheus.propostas.proposta.PropostaRepository;
 import br.com.zupacademy.matheus.propostas.proposta.StatusProposta;
@@ -8,6 +9,7 @@ import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.transaction.Transactional;
@@ -40,6 +42,7 @@ public class BuscaCartaoScheduling {
             } catch (FeignException ex) {
                 ex.printStackTrace();
                 log.info("Proposta {} ainda não possui cartão!", proposta.getId());
+                throw new ApiErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Aconteceu algo inesperado, por favor contate o administrador do sistema");
             }
         }
     }

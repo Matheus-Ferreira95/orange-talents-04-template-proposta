@@ -6,6 +6,8 @@ import br.com.zupacademy.matheus.propostas.feign.analise.SolicitacaoAnaliseClien
 import br.com.zupacademy.matheus.propostas.feign.analise.SolicitacaoAnaliseRequest;
 import br.com.zupacademy.matheus.propostas.feign.analise.SolicitacaoAnaliseResponse;
 import feign.FeignException;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,12 +27,14 @@ public class PropostaController {
     private final Logger log = LoggerFactory.getLogger(PropostaController.class);
     private final ExecutorTransacao executorTransacao;
     private final SolicitacaoAnaliseCliente analiseCliente;
+    private final Tracer tracer;
 
     public PropostaController(PropostaRepository propostaRepository, ExecutorTransacao executorTransacao,
-                              SolicitacaoAnaliseCliente analiseCliente) {
+                              SolicitacaoAnaliseCliente analiseCliente, Tracer tracer) {
         this.propostaRepository = propostaRepository;
         this.executorTransacao = executorTransacao;
         this.analiseCliente = analiseCliente;
+        this.tracer = tracer;
     }
 
     @PostMapping
@@ -62,6 +66,9 @@ public class PropostaController {
 
     private void consultaDados(Proposta proposta) {
         try {
+            Span activeSpan = tracer.activeSpan();
+            activeSpan.setBaggageItem("user.email", proposta.getEmail());
+            activeSpan.setTag("user.email", proposta.getEmail());
             SolicitacaoAnaliseRequest solicitacao = new SolicitacaoAnaliseRequest(proposta);
             SolicitacaoAnaliseResponse solicitacaoResponse = analiseCliente.consulta(solicitacao);
             proposta.setStatus(StatusProposta.ELEGIVEL);

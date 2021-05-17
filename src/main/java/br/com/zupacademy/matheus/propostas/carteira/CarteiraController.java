@@ -43,16 +43,18 @@ public class CarteiraController {
 
         Cartao cartao = possivelCartao.get();
         Carteira carteira;
+        boolean jaAssociado = carteiraRepository.existsByCartaoAndCarteira(cartao, request.getCarteira());
+
+        if (jaAssociado) {
+            log.warn("cartão de id {} já se encontra associado a carteira {}", id, request.getCarteira());
+            return ResponseEntity.unprocessableEntity().body("Não é possivel associar mais de uma vez um cartão para a mesma carteira digital");
+        }
+
         try {
             ResultadoCarteira resultadoCarteira = cartaoClient.associaCartaoACarteira(cartao.getNumeroCartao(), request);
             carteira = request.toModel(cartao, resultadoCarteira.getId());
             carteiraRepository.save(carteira);
             log.info("Cartão {} associado com sucesso à carteira {}", id, request.getCarteira());
-
-        } catch (FeignException.UnprocessableEntity ex) {
-            log.warn("cartão de id {} já se encontra associado a carteira {}", id, request.getCarteira());
-            return ResponseEntity.unprocessableEntity().body("Não é possivel associar mais de uma vez um cartão para a mesma carteira digital");
-
         } catch (FeignException ex) {
             ex.printStackTrace();
             throw new ApiErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Aconteceu algo inesperado, por favor contate o administrador do sistema");
