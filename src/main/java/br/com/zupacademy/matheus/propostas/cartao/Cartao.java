@@ -1,10 +1,12 @@
 package br.com.zupacademy.matheus.propostas.cartao;
 
+import br.com.zupacademy.matheus.propostas.avisoviagem.AvisoViagem;
 import br.com.zupacademy.matheus.propostas.biometria.Biometria;
 import br.com.zupacademy.matheus.propostas.proposta.Proposta;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
