@@ -1,5 +1,8 @@
 package br.com.zupacademy.matheus.propostas.feign.cartao;
 
+import br.com.zupacademy.matheus.propostas.avisoviagem.AvisoViagemRequest;
+import br.com.zupacademy.matheus.propostas.avisoviagem.AvisoViagemResponse;
+import br.com.zupacademy.matheus.propostas.avisoviagem.ResultadoAvisoViagem;
 import br.com.zupacademy.matheus.propostas.bloqueio.BloqueioCartaoRequest;
 import br.com.zupacademy.matheus.propostas.bloqueio.BloqueioCartaoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,4 +16,7 @@ public interface CartaoClient {
 
     @PostMapping("/api/cartoes/{id}/bloqueios")
     BloqueioCartaoResponse tentarBloquear(@PathVariable String id, @RequestBody BloqueioCartaoRequest request);
+
+    @PostMapping("/api/cartoes/{id}/avisos")
+    AvisoViagemResponse solicitaAvisoViagem(@PathVariable String id, @RequestBody AvisoViagemRequest request);
 }

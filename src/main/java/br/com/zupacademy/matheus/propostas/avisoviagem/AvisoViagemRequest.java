@@ -15,26 +15,34 @@ public class AvisoViagemRequest {
 
     @NotNull
     @Future
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private LocalDate termino;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate validoAte;
 
     public void setDestino(String destino) {
         this.destino = destino;
     }
 
-    public void setTermino(LocalDate termino) {
-        this.termino = termino;
+    public void setTermino(LocalDate validoAte) {
+        this.validoAte = validoAte;
     }
 
     @Override
     public String toString() {
         return "AvisoViagemRequest{" +
                 "destino='" + destino + '\'' +
-                ", termino=" + termino +
+                ", termino=" + validoAte +
                 '}';
     }
 
+    public String getDestino() {
+        return destino;
+    }
+
+    public LocalDate getValidoAte() {
+        return validoAte;
+    }
+
     public AvisoViagem toModel(String ip, String user_agente, Cartao cartao) {
-        return new AvisoViagem(destino, termino, ip, user_agente, cartao);
+        return new AvisoViagem(destino, validoAte, ip, user_agente, cartao);
     }
 }
