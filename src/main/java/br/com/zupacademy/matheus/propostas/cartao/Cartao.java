@@ -1,12 +1,11 @@
 package br.com.zupacademy.matheus.propostas.cartao;
 
-import br.com.zupacademy.matheus.propostas.avisoviagem.AvisoViagem;
 import br.com.zupacademy.matheus.propostas.biometria.Biometria;
+import br.com.zupacademy.matheus.propostas.compartilhado.converter.EncryptorConverter;
 import br.com.zupacademy.matheus.propostas.proposta.Proposta;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,6 +15,7 @@ public class Cartao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Convert(converter = EncryptorConverter.class)
     @Column(unique = true, nullable = false)
     private String numeroCartao;
 

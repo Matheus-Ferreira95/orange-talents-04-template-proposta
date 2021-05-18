@@ -1,6 +1,7 @@
 package br.com.zupacademy.matheus.propostas.proposta;
 
 import br.com.zupacademy.matheus.propostas.cartao.Cartao;
+import br.com.zupacademy.matheus.propostas.compartilhado.converter.EncryptorConverter;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Proposta {
     private String nome;
 
     @Column(nullable = false)
+    @Convert(converter = EncryptorConverter.class)
     private String documento;
 
     @Column(nullable = false, unique = true)

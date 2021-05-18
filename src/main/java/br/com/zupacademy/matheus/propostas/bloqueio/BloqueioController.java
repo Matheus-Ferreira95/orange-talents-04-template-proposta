@@ -46,7 +46,7 @@ public class BloqueioController {
             return ResponseEntity.notFound().build();
         }
 
-        Object email = usuario.getClaims().get("email");
+        String email = (String) usuario.getClaims().get("email");
         Cartao cartao = possivelCartao.get();
         if (cartao.pertenceAPropostaDoEmail(email)) {
             try {
