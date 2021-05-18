@@ -7,6 +7,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
       ZOOKEEPER_SYNC_LIMIT: 2
+      TZ: America/Minas_Gerais
 
   kafka:
     image: "confluentinc/cp-kafka:5.2.1"
@@ -21,6 +22,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      TZ: America/Minas_Gerais
 
   postgres:
     image: 'postgres:alpine'
@@ -73,6 +75,7 @@ services:
       LOG_LEVEL: INFO
       URL_SISTEMA_CARTAO: http://contas:8888/api/cartoes
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      TZ: America/Minas_Gerais
 
   contas:
     image: 'zupacademy/contas'
@@ -82,6 +85,7 @@ services:
       SERVER_PORT: 8888
       LOG_LEVEL: INFO
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      TZ: America/Minas_Gerais
 
   transacoes:
     image: 'zupacademy/transacoes'
@@ -94,6 +98,7 @@ services:
       LOG_LEVEL: INFO
       KAFKA_HOST: "kafka:29092"
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      TZ: America/Minas_Gerais
 
   jaeger:
     image: jaegertracing/all-in-one
@@ -108,14 +113,18 @@ services:
       - 9411:9411
     environment:
       COLLECTOR_ZIPKIN_HTTP_PORT: 9411
+      TZ: America/Minas_Gerais
 
   prometheus:
     image: prom/prometheus
     volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-volume:/etc/prometheus/
     network_mode: bridge
     ports:
-      - "9090:9090"
+      - 9090:9090
+    environment:
+      TZ: America/Minas_Gerais
 
   grafana:
     image: grafana/grafana
@@ -126,7 +135,8 @@ services:
       - "3000:3000"
     depends_on:
       - prometheus
-
+    environment:
+      TZ: America/Minas_Gerais
 
 #  proposta:
 #    build:
