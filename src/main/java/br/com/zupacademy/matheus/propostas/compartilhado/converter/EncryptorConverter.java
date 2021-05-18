@@ -9,10 +9,12 @@ import javax.persistence.Converter;
 @Converter
 public class EncryptorConverter implements AttributeConverter<String, String> {
 
+    private static final String SALT = KeyGenerators.string().generateKey();
+
     @Override
     public String convertToDatabaseColumn(String attribute) {
         try{
-            return Encryptors.queryableText("${proposta.encryptor.secret}", "12345678").encrypt(attribute);
+            return Encryptors.queryableText("${proposta.encryptor.secret}", SALT).encrypt(attribute);
         } catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -21,7 +23,7 @@ public class EncryptorConverter implements AttributeConverter<String, String> {
     @Override
     public String convertToEntityAttribute(String attribute) {
         try{
-            return Encryptors.queryableText("${proposta.encryptor.secret}", "12345678").decrypt(attribute);
+            return Encryptors.queryableText("${proposta.encryptor.secret}", SALT).decrypt(attribute);
         } catch (Exception e){
             throw new RuntimeException(e);
         }
